@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0d1a0d">
+<title>مائدة الحميد</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d1a0d;--s1:#132013;--s2:#192819;--s3:#1f301f;--s4:#253825;--gold:#c9a84c;--gold2:#e4c76b;--gold3:#8a7030;--cream:#f4e8d2;--t1:#eee4d4;--t2:#b8aa98;--t3:#7a6e60;--red:#c85050;--green2:#68b868;--amber:#c88040;--blue:#4878a8;--purple:#9060c0;--teal:#3a9090;--border:rgba(201,168,76,.13);--border2:rgba(201,168,76,.25);--shadow:0 4px 24px rgba(0,0,0,.5);--r:14px;--rsm:9px}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;overflow-x:hidden}
+#splash{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background-image:radial-gradient(ellipse 80% 50% at 50% 40%,rgba(201,168,76,.06) 0%,transparent 70%)}
+#splash h1{font-family:'Amiri',serif;font-size:44px;color:var(--gold);text-align:center}
+#splash p{font-size:12px;color:var(--t3)}
+.spin{width:32px;height:32px;border:2.5px solid var(--border2);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;margin-top:12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+header{position:sticky;top:0;z-index:90;background:rgba(13,26,13,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:11px 16px}
+.h-logo{font-family:'Amiri',serif;font-size:19px;color:var(--gold)}
+.h-sub{font-size:9.5px;color:var(--t3);margin-top:1px}
+.h-date{text-align:left;font-size:10px;color:var(--t2);line-height:1.5}
+.tabs{display:flex;overflow-x:auto;background:var(--s1);border-bottom:1px solid var(--border);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;padding:10px 13px;font-family:'Tajawal',sans-serif;font-size:11.5px;font-weight:500;color:var(--t3);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:all .2s}
+.tab.on{color:var(--gold);border-bottom-color:var(--gold)}
+.tab span{display:block;font-size:14px;margin-bottom:2px}
+main{padding:12px 12px 86px;max-width:660px;margin:0 auto}
+.pg{display:none}.pg.on{display:block}
+.card{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:13px;margin-bottom:11px;box-shadow:var(--shadow)}
+.card-hd{font-size:14px;font-weight:700;color:var(--gold);margin-bottom:11px;display:flex;align-items:center;gap:6px}
+.card-hd em{font-size:17px;font-style:normal}
+.day-nav{display:flex;align-items:center;justify-content:space-between;background:var(--s2);border:1px solid var(--border);border-radius:var(--rsm);padding:9px 12px;margin-bottom:11px}
+.day-center{text-align:center}
+.day-name{font-size:15px;font-weight:700;color:var(--cream)}
+.day-rel{font-size:10px;color:var(--t3);margin-top:2px}
+.nav-b{background:var(--s3);border:1px solid var(--border);color:var(--gold);border-radius:7px;padding:5px 12px;font-size:16px;cursor:pointer;transition:all .2s}
+.nav-b:hover{background:var(--gold);color:var(--bg)}
+.aud-row{display:flex;gap:6px;margin-bottom:11px}
+.aud-btn{flex:1;padding:8px 6px;background:var(--s2);border:1px solid var(--border);border-radius:var(--rsm);font-family:'Tajawal',sans-serif;font-size:11.5px;font-weight:600;color:var(--t3);cursor:pointer;text-align:center;transition:all .2s;line-height:1.4}
+.aud-btn.on-adult{color:var(--gold);border-color:var(--gold);background:rgba(201,168,76,.08)}
+.aud-btn.on-kids{color:#80c8e8;border-color:rgba(128,200,232,.4);background:rgba(72,120,168,.1)}
+.ps-label{font-size:9.5px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.7px;margin:12px 0 6px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.badge{font-size:9px;padding:2px 7px;border-radius:10px;font-weight:700}
+.badge-adult{background:rgba(144,96,192,.15);color:#c090f0}
+.badge-kids{background:rgba(72,120,168,.15);color:#80c8e8}
+.badge-all{background:rgba(74,154,74,.15);color:var(--green2)}
+.mc{background:var(--s2);border:1px solid var(--border);border-radius:var(--rsm);margin-bottom:7px;overflow:hidden;cursor:pointer;transition:border-color .2s}
+.mc:hover{border-color:var(--gold3)}.mc.op{border-color:rgba(201,168,76,.4)}
+.mc-top{display:flex;align-items:center;justify-content:space-between;padding:10px 12px}
+.mc-left{display:flex;align-items:center;gap:8px}
+.mc-em{font-size:20px}
+.mc-time{font-size:9px;color:var(--gold);font-weight:700;margin-bottom:1px}
+.mc-name{font-size:12px;font-weight:600;color:var(--cream)}
+.mc-tag{font-size:9px;padding:2px 7px;border-radius:10px;border:1px solid var(--border);background:var(--s3);color:var(--t3);flex-shrink:0}
+.mc-body{display:none;padding:0 12px 12px}.mc.op .mc-body{display:block}
+.fl{display:flex;align-items:flex-start;gap:6px;font-size:11.5px;color:var(--t2);padding:3.5px 0;border-bottom:1px solid rgba(255,255,255,.03)}
+.fl:last-child{border:none}
+.fd{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.fd.g{background:var(--gold)}.fd.gr{background:var(--green2)}.fd.a{background:var(--amber)}.fd.b{background:var(--blue)}.fd.p{background:var(--purple)}.fd.t{background:var(--teal)}.fd.r{background:var(--red)}
+.why{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.14);border-radius:7px;padding:8px 10px;margin-top:8px;font-size:11px;color:var(--t2);line-height:1.65}
+.why strong{color:var(--gold2)}
+.al{display:flex;align-items:flex-start;gap:8px;padding:9px 11px;border-radius:var(--rsm);margin-bottom:7px;font-size:11.5px}
+.al.w{background:rgba(200,128,64,.09);border:1px solid rgba(200,128,64,.28);color:#e0a070}
+.al.i{background:rgba(72,120,168,.09);border:1px solid rgba(72,120,168,.28);color:#80a8d8}
+.al.g{background:rgba(74,154,74,.09);border:1px solid rgba(74,154,74,.28);color:var(--green2)}
+.al.r{background:rgba(200,80,80,.09);border:1px solid rgba(200,80,80,.28);color:#e08080}
+.al.pur{background:rgba(144,96,192,.09);border:1px solid rgba(144,96,192,.28);color:#c090f0}
+.al-ic{font-size:13px;flex-shrink:0;margin-top:1px}
+.sec-t{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.7px;margin:8px 0 5px;padding-top:8px;border-top:1px solid rgba(255,255,255,.04)}
+.sec-t:first-child{border-top:none;padding-top:0;margin-top:0}
+.wstrip{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:3px}
+.wstrip::-webkit-scrollbar{display:none}
+.wd{flex:0 0 auto;min-width:84px;background:var(--s2);border:1px solid var(--border);border-radius:var(--rsm);padding:9px;cursor:pointer;transition:all .2s}
+.wd.today{border-color:var(--gold)}.wd:hover{border-color:var(--gold3)}
+.wd-name{font-size:11px;font-weight:700;color:var(--cream)}
+.wd-date{font-size:9px;color:var(--t3);margin-bottom:5px}
+.wd-m{font-size:10px;color:var(--t2);padding:2px 0;display:flex;align-items:flex-start;gap:3px;line-height:1.4}
+.wd-m::before{content:'·';color:var(--gold);flex-shrink:0}
+.shop-intro{font-size:11.5px;color:var(--t2);line-height:1.7;margin-bottom:11px;padding:9px 11px;background:var(--s2);border-radius:var(--rsm);border:1px solid var(--border)}
+.shop-cat{margin-bottom:9px}
+.shop-cat-hd{display:flex;align-items:center;justify-content:space-between;background:var(--s2);border:1px solid var(--border);border-radius:var(--rsm);padding:10px 12px;cursor:pointer;transition:border-color .2s}
+.shop-cat-hd:hover{border-color:var(--gold3)}
+.shop-cat-hd.op{border-color:rgba(201,168,76,.4);border-bottom-left-radius:0;border-bottom-right-radius:0}
+.scat-left{display:flex;align-items:center;gap:7px}
+.scat-em{font-size:17px}
+.scat-name{font-size:12.5px;font-weight:700;color:var(--cream)}
+.scat-count{font-size:9.5px;color:var(--t3)}
+.scat-arr{font-size:12px;color:var(--gold3);transition:transform .2s}
+.shop-cat-hd.op .scat-arr{transform:rotate(180deg)}
+.shop-body{display:none;background:var(--s3);border:1px solid rgba(201,168,76,.3);border-top:none;border-bottom-left-radius:var(--rsm);border-bottom-right-radius:var(--rsm);padding:9px 12px}
+.shop-body.op{display:block}
+.prod{background:var(--s2);border:1px solid var(--border);border-radius:var(--rsm);padding:9px 11px;margin-bottom:7px;display:flex;align-items:flex-start;gap:9px}
+.prod:last-child{margin-bottom:0}
+.prod-icon{font-size:20px;flex-shrink:0;padding-top:1px}
+.prod-info{flex:1}
+.prod-brand{font-size:12.5px;font-weight:700;color:var(--gold2)}
+.prod-generic{font-size:11px;color:var(--t2);margin-top:2px}
+.prod-why{font-size:10.5px;color:var(--t3);margin-top:3px;line-height:1.55}
+.prod-note{display:inline-block;font-size:9px;padding:2px 7px;border-radius:10px;margin-top:4px;font-weight:700}
+.pn-clean{background:rgba(74,154,74,.12);border:1px solid rgba(74,154,74,.25);color:var(--green2)}
+.pn-check{background:rgba(200,128,64,.12);border:1px solid rgba(200,128,64,.25);color:var(--amber)}
+.pn-avoid{background:rgba(200,80,80,.1);border:1px solid rgba(200,80,80,.25);color:#e08080}
+.pn-best{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:var(--gold)}
+.tip{background:linear-gradient(135deg,rgba(201,168,76,.07),rgba(72,120,168,.05));border:1px solid rgba(201,168,76,.18);border-radius:var(--rsm);padding:11px 13px;margin-bottom:8px}
+.tip-t{font-size:12.5px;font-weight:700;color:var(--gold2);margin-bottom:3px}
+.tip-tx{font-size:11.5px;color:var(--t2);line-height:1.65}
+.prof-top{display:flex;align-items:center;gap:11px;margin-bottom:11px}
+.prof-av{font-size:34px}
+.prof-name{font-size:15px;font-weight:700;color:var(--cream)}
+.prof-role{font-size:10px;color:var(--t3)}
+.needs-g{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:9px}
+.ni{background:var(--s2);border-radius:var(--rsm);padding:8px 10px;border:1px solid var(--border)}
+.ni-l{font-size:9px;color:var(--t3)}
+.ni-v{font-size:15px;font-weight:700;color:var(--gold)}
+.ni-u{font-size:9px;color:var(--t3)}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.chip{font-size:10.5px;padding:3px 8px;border-radius:11px;border:1px solid var(--border);background:var(--s3);color:var(--t2)}
+.chip.ok{color:var(--green2);border-color:rgba(104,184,104,.3);background:rgba(74,154,74,.07)}
+.chip.no{color:var(--red);border-color:rgba(200,80,80,.3);background:rgba(200,80,80,.06)}
+.supp-g{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.supp-c{background:var(--s2);border:1px solid var(--border);border-radius:var(--rsm);padding:10px 12px}
+.supp-p{font-size:11px;font-weight:700;color:var(--gold);margin-bottom:6px}
+.supp-row{display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:11px;color:var(--t2)}
+.supp-row:last-child{border:none}
+.supp-t{font-size:9.5px;color:var(--t3)}
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:90;background:rgba(13,26,13,.97);backdrop-filter:blur(18px);border-top:1px solid var(--border);display:flex;padding:6px 0 max(6px,env(safe-area-inset-bottom))}
+.bnav-b{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px;background:none;border:none;cursor:pointer;transition:all .2s}
+.bnav-ic{font-size:18px}
+.bnav-l{font-size:9px;color:var(--t3);font-family:'Tajawal',sans-serif}
+.bnav-b.on .bnav-l{color:var(--gold)}
+.bnav-b.on .bnav-ic{transform:translateY(-2px)}
+.pbtn{width:100%;padding:12px;border:none;border-radius:var(--rsm);cursor:pointer;background:linear-gradient(135deg,var(--gold),var(--gold3));color:var(--bg);font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;margin-top:7px}
+.rv{opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s}
+.rv.sh{opacity:1;transform:none}
+@media print{header,.tabs,.bnav,.pbtn,.day-nav,.nav-b,.aud-row{display:none!important}body{background:#fff;color:#000}.card,.mc{box-shadow:none;border:1px solid #ccc}.mc-body{display:block!important}main{padding:0}.pg{display:block!important}}
+@media(max-width:380px){.supp-g{grid-template-columns:1fr}.needs-g{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="splash"><h1>مائدة الحميد</h1><p>الكبار: نظام د. ضياء · الأطفال: بروتين يومي</p><div class="spin"></div></div>
+<header>
+  <div><div class="h-logo">🌿 مائدة الحميد</div><div class="h-sub">الكبار: نظام د. ضياء · الأطفال: بروتين يومي</div></div>
+  <div class="h-date" id="hdate"></div>
+</header>
+<div class="tabs">
+  <button class="tab on" onclick="gp('today')"><span>📅</span>اليوم</button>
+  <button class="tab" onclick="gp('week')"><span>📆</span>الأسبوع</button>
+  <button class="tab" onclick="gp('family')"><span>👨‍👩‍👧‍👦</span>العائلة</button>
+  <button class="tab" onclick="gp('shop')"><span>🛒</span>التسوق</button>
+  <button class="tab" onclick="gp('supps')"><span>💊</span>مكملات</button>
+  <button class="tab" onclick="gp('tips')"><span>💡</span>نصائح</button>
+</div>
+<main>
+
+<div class="pg on" id="pg-today">
+  <div class="day-nav rv">
+    <button class="nav-b" onclick="chd(-1)">‹</button>
+    <div class="day-center"><div class="day-name" id="dname">—</div><div class="day-rel" id="drel">اليوم</div></div>
+    <button class="nav-b" onclick="chd(1)">›</button>
+  </div>
+  <div class="aud-row rv">
+    <button class="aud-btn on-adult" id="btn-adult" onclick="setAud('adult')">👨👩 سعد وأمهم — نظام د. ضياء</button>
+    <button class="aud-btn" id="btn-kids" onclick="setAud('kids')">👧👦🧒 الأطفال</button>
+  </div>
+  <div id="planOut"></div>
+</div>
+
+<div class="pg" id="pg-week">
+  <div class="card rv"><div class="card-hd"><em>📆</em>خطة الأسبوع</div><div class="wstrip" id="wstrip"></div></div>
+  <div class="card rv">
+    <div class="card-hd"><em>🧠</em>مبدأ الخطة</div>
+    <div class="al pur"><div class="al-ic">🩺</div><div><strong>د. ضياء للكبار:</strong> لا وقت ثابت — الأكل عند الجوع فقط حتى الشبع. الصيام أولوية. البروتين الحيواني 3 مرات أسبوعياً فقط.</div></div>
+    <div class="al i"><div class="al-ic">👶</div><div><strong>الأطفال:</strong> بروتين حيواني يومي إلزامي للنمو — بيض أو دجاج أو لحم أو سمك في كل يوم.</div></div>
+    <div class="tip"><div class="tip-t">🔄 أيام البروتين للكبار</div><div class="tip-tx">أحد + ثلاثاء + خميس. باقي الأيام: توست ريتشبيك + أرز + بطاطس + فواكه فقط.</div></div>
+  </div>
+  <button class="pbtn" onclick="window.print()">🖨️ طباعة خطة الأسبوع</button>
+</div>
+
+<div class="pg" id="pg-family"><div id="famProf"></div></div>
+
+<div class="pg" id="pg-shop">
+  <div class="card rv">
+    <div class="card-hd"><em>🛒</em>قائمة التسوق — الأسماء التجارية</div>
+    <div class="shop-intro">كل منتج مختار بناءً على <strong style="color:var(--gold2)">نقاء المكونات</strong> ومتوافق مع نظام د. ضياء. الأسماء التجارية هي الأنظف والأصح في فئتها في السوق السعودي.</div>
+    <div id="shopList"></div>
+  </div>
+</div>
+
+<div class="pg" id="pg-supps">
+  <div class="card rv">
+    <div class="card-hd"><em>💊</em>جدول المكملات</div>
+    <div class="al i"><div class="al-ic">ℹ️</div><div>التوقيت مهم — بعض المكملات تتعارض. الجدول مرتب بدقة.</div></div>
+    <div class="supp-g">
+      <div class="supp-c"><div class="supp-p">👨 سعد</div><div class="supp-row"><span>حبة البركة</span><span class="supp-t">صباحاً صائم</span></div><div class="supp-row"><span>عسل</span><span class="supp-t">مع حبة البركة</span></div><div class="supp-row"><span>أوميغا-3</span><span class="supp-t">مع أول وجبة</span></div><div class="supp-row"><span>فيتامين D</span><span class="supp-t">مع وجبة دسمة</span></div><div class="supp-row"><span>مغنيسيوم</span><span class="supp-t">قبل النوم</span></div></div>
+      <div class="supp-c"><div class="supp-p">👩 أمهم</div><div class="supp-row"><span>أوميغا-3</span><span class="supp-t">مع أول وجبة</span></div><div class="supp-row"><span>فيتامين D</span><span class="supp-t">مع وجبة دسمة</span></div><div class="supp-row"><span>حديد</span><span class="supp-t">صائمة + عصير ليمون</span></div><div class="supp-row"><span>كالسيوم</span><span class="supp-t">مساءً — بعد 2 ساعة من الحديد</span></div></div>
+      <div class="supp-c"><div class="supp-p">👧 ميرا</div><div class="supp-row"><span>أوميغا-3</span><span class="supp-t">مع الفطور 6ص</span></div><div class="supp-row"><span>فيتامين D</span><span class="supp-t">مع الفطور</span></div><div class="supp-row"><span>حديد</span><span class="supp-t">+ فيتامين C — ليس مع حليب</span></div><div class="supp-row"><span>كالسيوم</span><span class="supp-t">مساءً منفصل</span></div></div>
+      <div class="supp-c"><div class="supp-p">👦🧒 الأولاد</div><div class="supp-row"><span>مكمل أطفال</span><span class="supp-t">مع الفطور</span></div><div class="supp-row"><span>فيتامين D</span><span class="supp-t">مع الفطور + حليب</span></div><div class="supp-row"><span>أوميغا-3 أطفال</span><span class="supp-t">مع الغداء</span></div></div>
+    </div>
+  </div>
+  <div class="card rv">
+    <div class="card-hd"><em>⚠️</em>قواعد صارمة</div>
+    <div class="al r"><div class="al-ic">🚫</div><div>الحديد + الكالسيوم = يلغيان بعض — فجوة ساعتين إلزامية</div></div>
+    <div class="al r"><div class="al-ic">🚫</div><div>الحديد + شاي أو قهوة = امتصاص صفر</div></div>
+    <div class="al w"><div class="al-ic">⚠️</div><div>فيتامين D يُمتص فقط مع الدهون</div></div>
+    <div class="al g"><div class="al-ic">✅</div><div>أوميغا-3 مع وجبة دسمة — أفضل امتصاص لجميع أفراد العائلة</div></div>
+  </div>
+</div>
+
+<div class="pg" id="pg-tips">
+  <div class="card rv">
+    <div class="card-hd"><em>🩺</em>نظام د. ضياء — المبادئ</div>
+    <div class="al pur"><div class="al-ic">☝️</div><div><strong>المبدأ الأساسي:</strong> لا كميات ولا توقيت — الأكل عند الجوع فقط، إلى الشبع، ثم التوقف. الصيام أولوية دائماً.</div></div>
+    <div class="tip"><div class="tip-t">🌾 توست ريتشبيك بالردة — ما هو؟</div><div class="tip-tx"><strong style="color:var(--gold2)">Wasa Crisp Bread</strong> أو <strong style="color:var(--gold2)">Ryvita</strong> — خبز مقرمش نشيف مصنوع من نخالة القمح الكاملة. بدون خميرة، بدون سكر، بدون زيت صناعي. يجدونه في قسم الخبز أو الأغذية الصحية في Tamimi وDanube.</div></div>
+    <div class="tip"><div class="tip-t">🧀 الجبن المطبوخ — المقصود تحديداً</div><div class="tip-tx">الجبن الذي يسيح في الميكرويف = جبن طبيعي. <strong style="color:var(--gold2)">Kiri Original</strong> أو <strong style="color:var(--gold2)">Puck Cream Cheese</strong>. 15-20 ثانية في الميكرويف يسيح تماماً. ليس Kraft Singles أو Happy Cow المثلثات — هذه جبن معالج بإضافات.</div></div>
+    <div class="tip"><div class="tip-t">🥩 البروتين الحيواني — 3 مرات فقط للكبار</div><div class="tip-tx">أحد + ثلاثاء + خميس: لحم ضاني أو ماعز أو جملي أو سمك. باقي الأيام الأربعة: توست + أرز + بطاطس + فواكه فقط.</div></div>
+    <div class="tip"><div class="tip-t">🍎 الفواكه — مقشّرة دائماً وبدون بذور</div><div class="tip-tx">تفاح + كمثرى + مانجا + فراولة + رمان. التقشير إلزامي في هذا النظام. عصير الرمان يُصفى جيداً.</div></div>
+  </div>
+  <div class="card rv">
+    <div class="card-hd"><em>🌿</em>كنوز مطبخكم</div>
+    <div class="tip"><div class="tip-t">☕ قهوة الزعفران اليومية</div><div class="tip-tx">الزعفران: مضاد اكتئاب طبيعي مثبت علمياً. الهيل: يحسن الهضم. روتين أمهم اليومي لا يُبدَّل.</div></div>
+    <div class="tip"><div class="tip-t">🍯 عسل + سمن + خبز بيت</div><div class="tip-tx">هذا ما تدفع عليه الفنادق الصحية مئات الدولارات. موجود عندكم مجاناً. سمن بلدي طبيعي + عسل طبيعي + خبز بيت = طاقة مستدامة ودهون صحية.</div></div>
+  </div>
+  <button class="pbtn" onclick="window.print()">🖨️ طباعة النصائح</button>
+</div>
+
+</main>
+<div class="bnav">
+  <button class="bnav-b on" onclick="gp('today')"><span class="bnav-ic">📅</span><span class="bnav-l">اليوم</span></button>
+  <button class="bnav-b" onclick="gp('week')"><span class="bnav-ic">📆</span><span class="bnav-l">الأسبوع</span></button>
+  <button class="bnav-b" onclick="gp('family')"><span class="bnav-ic">👨‍👩‍👧‍👦</span><span class="bnav-l">العائلة</span></button>
+  <button class="bnav-b" onclick="gp('shop')"><span class="bnav-ic">🛒</span><span class="bnav-l">تسوق</span></button>
+  <button class="bnav-b" onclick="gp('supps')"><span class="bnav-ic">💊</span><span class="bnav-l">مكملات</span></button>
+  <button class="bnav-b" onclick="gp('tips')"><span class="bnav-ic">💡</span><span class="bnav-l">نصائح</span></button>
+</div>
+<script>
+const DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+const MONTHS=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+const W=[
+  {day:0,adult:{protein:true,note:'يوم البروتين الأول (الأحد). اللحم مرة واحدة فقط — باقي الوجبات خالية من البروتين الحيواني.',options:[{em:'🍞',n:'توست Wasa أو Ryvita + جبن Kiri مطبوخ',tag:'عند الجوع',it:[{c:'g',x:'2-3 قطع Wasa Crisp Bread Fibre أو Ryvita Original'},{c:'a',x:'Kiri Original أو Puck Cream Cheese — يُذاب في الميكرويف 20 ثانية'},{c:'b',x:'ماء أو شاي أعشاب بدون سكر'}]},{em:'🍖',n:'أرز + لحم ضاني + بطاطس مسلوقة',tag:'الوجبة الرئيسية',it:[{c:'g',x:'أرز أبيض مطهو بزيت الزيتون'},{c:'a',x:'لحم ضاني أو ماعز مطهو — البروتين المسموح اليوم'},{c:'gr',x:'بطاطس مسلوقة بزيت زيتون وملح فقط'}]},{em:'🍎',n:'تفاح أو كمثرى مقشّرة',tag:'عند الجوع',it:[{c:'gr',x:'تفاح أو كمثرى مقشّرة بالكامل — بدون قشر ولا بذور'}]}]},kids:{breakfast:{em:'🥚',n:'بيض مسلوق + خبز بيت + حليب',it:[{c:'g',x:'بيضتان مسلوقتان لكل طفل'},{c:'g',x:'خبز بيت أو توست أسمر'},{c:'a',x:'قطعة جبن'},{c:'b',x:'كوب حليب دافئ كامل الدسم'}],prep:'تُسلق الليلة السابقة وتُحفظ في الثلاجة.',mira:'ميرا: مثالي لها تماماً'},lunch:{em:'🍲',n:'مرق دجاج بالخضار + أرز',it:[{c:'a',x:'مرق دجاج صافٍ + دجاج مفتت'},{c:'gr',x:'جزر + كوسا داخل المرق'},{c:'a',x:'أرز مطهو بالمرق'},{c:'b',x:'حليب بارد'}],mira:'ميرا: مرق خضار بدون دجاج + بيضة مسلوقة'},dinner:{em:'🍝',n:'مكرونة بالزبدة والجبن + خضار',it:[{c:'a',x:'مكرونة بالزبدة والجبن (لسان عصفور للصغير)'},{c:'gr',x:'جزر + بازلاء داخل المكرونة'},{c:'b',x:'حليب دافئ قبل النوم'}],mira:'ميرا: مثالي لها'}}},
+  {day:1,adult:{protein:false,note:'يوم بدون بروتين حيواني. الجسم يستريح ويعتمد على الكربوهيدرات والدهون النظيفة.',options:[{em:'🍞',n:'توست Ryvita + زيت زيتون أو زبدة Lurpak',tag:'عند الجوع',it:[{c:'g',x:'2-3 قطع Ryvita أو Wasa'},{c:'t',x:'زيت زيتون بكر ممتاز — California Olive Ranch أو Kirkland'},{c:'a',x:'أو: زبدة Lurpak Unsalted طبيعية'}]},{em:'🍚',n:'أرز بالشعيرية + بطاطس مشوية',tag:'الوجبة الرئيسية',it:[{c:'g',x:'أرز بالشعيرية بزيت الزيتون'},{c:'gr',x:'بطاطس مشوية بزيت الزيتون والملح'},{c:'b',x:'عصير ليمون طازج'}]},{em:'🍊',n:'عصير برتقال أو رمان طازج',tag:'عند الجوع',it:[{c:'gr',x:'برتقال عصير طازج بدون لب'},{c:'gr',x:'أو: عصير رمان طازج مصفى'}]}]},kids:{breakfast:{em:'🥛',n:'فول مدمس + خبز بيت + حليب',it:[{c:'gr',x:'فول مدمس بالزيت والليمون'},{c:'g',x:'خبز بيت'},{c:'gr',x:'طماطم + خيار'},{c:'b',x:'حليب دافئ'}],prep:'فول معلب يُسخَّن في 3 دقائق.',mira:'ميرا: مثالي + بيضة مسلوقة'},lunch:{em:'🍝',n:'مكرونة بولونيز باللحم + سلطة',it:[{c:'a',x:'مكرونة بصلصة طماطم ولحم مفروم'},{c:'gr',x:'سبانخ مخفية في الصلصة'},{c:'a',x:'جبن مبشور فوقها'},{c:'b',x:'حليب'}],mira:'ميرا: بدون لحم + عدس مسلوق في الصلصة'},dinner:{em:'🥚',n:'بيض بالطماطم + خبز بيت',it:[{c:'a',x:'بيض مقلي بالطماطم والبصل'},{c:'g',x:'خبز بيت'},{c:'gr',x:'خيار + زيتون'},{c:'b',x:'حليب'}],mira:'ميرا: مثالي لها'}}},
+  {day:2,adult:{protein:true,note:'يوم البروتين الثاني (الثلاثاء). السمك تنويع ممتاز عن اللحم الأحمر.',options:[{em:'🍞',n:'توست Wasa محمّص + زبدة أو سمنة',tag:'عند الجوع',it:[{c:'g',x:'Wasa Crisp Bread محمّص قليلاً في الفرن'},{c:'a',x:'زبدة Lurpak Unsalted أو سمنة بلدية طبيعية'},{c:'b',x:'شاي أعشاب'}]},{em:'🐟',n:'أرز + سمك + بطاطس محمّرة',tag:'الوجبة الرئيسية',it:[{c:'g',x:'أرز أبيض'},{c:'b',x:'سمك مشوي أو مطهو بالليمون وزيت الزيتون'},{c:'gr',x:'بطاطس محمّرة بزيت الزيتون في الفرن'}]},{em:'🍎',n:'رمان',tag:'عند الجوع',it:[{c:'gr',x:'رمان طازج — الحبيبات مقبولة، البذور الصلبة تُزال'}]}]},kids:{breakfast:{em:'🧀',n:'جبن + زيتون + خيار + خبز + حليب',it:[{c:'g',x:'جبن أبيض Al Marai أو Puck White Cheese'},{c:'gr',x:'زيتون أسود + خيار + طماطم'},{c:'g',x:'خبز بيت'},{c:'b',x:'حليب'}],prep:'لا يحتاج طبخ.',mira:'ميرا: مثالي + بيضة مسلوقة'},lunch:{em:'🍗',n:'دجاج مشوي + أرز + سلطة فتوش',it:[{c:'a',x:'دجاج مشوي بالزعتر والثوم والكركم'},{c:'a',x:'أرز بمرق الدجاج'},{c:'gr',x:'فتوش: خيار + طماطم + بقدونس + جرجير + ليمون'},{c:'b',x:'حليب'}],mira:'ميرا: أرز + سلطة + بيض مسلوق'},dinner:{em:'🫘',n:'عدس + أرز (مجدرة) + خبز',it:[{c:'gr',x:'عدس أحمر + أرز + بصل محمر بزيت الزيتون'},{c:'gr',x:'سلطة خيار وليمون'},{c:'g',x:'خبز بيت'}],mira:'ميرا: مثالي — بروتين نباتي كامل'}}},
+  {day:3,adult:{protein:false,note:'يوم بدون بروتين حيواني. البطاطس المهروسة بالزبدة وجبة مُشبِعة جداً.',options:[{em:'🍞',n:'توست Ryvita + Kiri أو Puck + زيت زيتون',tag:'عند الجوع',it:[{c:'g',x:'Ryvita أو Wasa'},{c:'a',x:'Kiri أو Puck مُذاب في الميكرويف'},{c:'t',x:'خيط زيت زيتون فوق الجبن'}]},{em:'🥔',n:'أرز + بطاطس مهروسة بالزبدة',tag:'الوجبة الرئيسية',it:[{c:'g',x:'أرز أبيض'},{c:'gr',x:'بطاطس مهروسة: Lurpak Unsalted + ملح + قليل حليب'},{c:'b',x:'عصير ليمون'}]},{em:'🍐',n:'كمثرى مقشّرة',tag:'عند الجوع',it:[{c:'gr',x:'كمثرى طازجة مقشّرة بالكامل'}]}]},kids:{breakfast:{em:'🥣',n:'شوفان Quaker بالحليب والعسل والموز',it:[{c:'gr',x:'شوفان Quaker Oats مطهو بالحليب'},{c:'g',x:'عسل طبيعي + قرفة'},{c:'gr',x:'موز مقطع'},{c:'b',x:'حليب إضافي'}],prep:'5 دقائق.',mira:'ميرا: مثالي لها'},lunch:{em:'🥘',n:'مرقوق لحم بالخضار',it:[{c:'g',x:'لحم غنم + بطاطس + جزر + كوسا'},{c:'a',x:'عجين مرقوق في المرق'},{c:'gr',x:'جرجير + خيار'}],mira:'ميرا: خضار وعجين بدون لحم + بيض مسلوق'},dinner:{em:'🥣',n:'شوربة شوفان باللحم + خبز بيت',it:[{c:'a',x:'شوفان Quaker بمرق لحم + قطع لحم صغيرة'},{c:'gr',x:'سبانخ داخل الشوربة'},{c:'g',x:'خبز بيت'}],mira:'ميرا: شوربة شوفان بمرق خضار + بيض'}}},
+  {day:4,adult:{protein:true,note:'البروتين الثالث والأخير هذا الأسبوع (الخميس). لحم الجمل غني بالبروتين والحديد وخفيف الدهون.',options:[{em:'🍞',n:'توست Wasa + Kiri مطبوخ',tag:'عند الجوع',it:[{c:'g',x:'Wasa أو Ryvita'},{c:'a',x:'Kiri مُذاب'},{c:'b',x:'ماء أو شاي'}]},{em:'🐪',n:'أرز + لحم جملي + بطاطس مهروسة',tag:'الوجبة الرئيسية',it:[{c:'g',x:'أرز أبيض'},{c:'a',x:'لحم جملي مطهو — البروتين الثالث هذا الأسبوع'},{c:'gr',x:'بطاطس مهروسة بالزبدة'}]},{em:'🥭',n:'مانجا أو فراولة',tag:'عند الجوع',it:[{c:'gr',x:'مانجا مقشّرة مقطعة'},{c:'gr',x:'أو: فراولة طازجة'}]}]},kids:{breakfast:{em:'🥚',n:'شكشوكة (بيض + طماطم) + خبز',it:[{c:'a',x:'بيض مقلي بالطماطم والبصل'},{c:'g',x:'خبز بيت'},{c:'gr',x:'خيار'},{c:'b',x:'حليب'}],prep:'10 دقائق.',mira:'ميرا: مثالي'},lunch:{em:'🍲',n:'ملوخية بالدجاج + أرز',it:[{c:'gr',x:'ملوخية بالثوم والكزبرة'},{c:'a',x:'دجاج مفتت'},{c:'a',x:'أرز'},{c:'g',x:'خبز بيت'}],mira:'ميرا: ملوخية بدون دجاج + بيضة'},dinner:{em:'🥙',n:'سنبوسة + سلطة كينوا',it:[{c:'a',x:'سنبوسة لحم مقرمشة — 4-5 قطع'},{c:'gr',x:'سلطة كينوا: خيار + بقدونس + جرجير + ليمون'},{c:'a',x:'صوص ثوم'}],mira:'ميرا: سنبوسة جبن + كينوا + بيض'}}},
+  {day:5,adult:{protein:false,note:'الجمعة — يوم خفيف بدون بروتين حيواني. الجسم يستعيد.',options:[{em:'🍞',n:'توست Ryvita + زيت زيتون',tag:'عند الجوع',it:[{c:'g',x:'Ryvita أو Wasa'},{c:'t',x:'زيت زيتون بكر ممتاز + رشة ملح البحر'}]},{em:'🍚',n:'أرز + بطاطس مشوية',tag:'الوجبة الرئيسية',it:[{c:'g',x:'أرز أبيض'},{c:'gr',x:'بطاطس مشوية بزيت الزيتون'},{c:'b',x:'عصير رمان طازج مصفى'}]},{em:'🍓',n:'فراولة أو مانجا مقشّرة',tag:'عند الجوع',it:[{c:'gr',x:'فراولة طازجة'},{c:'a',x:'أحياناً: قطعة حلوى بسيطة حسب نظام د. ضياء'}]}]},kids:{breakfast:{em:'🥛',n:'حليب + تمر + موز + بسكويت شوفان Nairns',it:[{c:'b',x:'حليب Nada أو Saudia كامل الدسم دافئ'},{c:'g',x:'تمر رطب — 4 حبات'},{c:'gr',x:'موز'},{c:'a',x:'بسكويت Nairns Oat Biscuits — الأنظف'}],prep:'فطور خفيف.',mira:'ميرا: نفس الفطور + بيضة'},lunch:{em:'🍖',n:'عصيدة بمرق اللحم + لحم غنم + خبز بيت',it:[{c:'g',x:'عصيدة قمح بمرق اللحم — الوجبة المفضلة لسعد'},{c:'g',x:'لحم غنم طري — كتف مطهو 3 ساعات'},{c:'g',x:'كشنة طازجة + خبز بيت + مرق على الجانب'}],mira:'ميرا: عصيدة بمرق خضار + جبن + بيض'},dinner:{em:'🥗',n:'سلطة كبيرة + بيض + جبن + خبز',it:[{c:'gr',x:'خيار + طماطم + جرجير + بقدونس + زيتون'},{c:'a',x:'بيض مسلوق — 2 حبة للشخص'},{c:'a',x:'جبن أبيض Puck أو Al Marai'},{c:'g',x:'خبز بيت'}],mira:'ميرا: مثالي'}}},
+  {day:6,adult:{protein:false,note:'السبت — نهاية الأسبوع خفيفة. الأسبوع القادم يبدأ دورة البروتين من جديد.',options:[{em:'🍞',n:'توست Wasa + زبدة Lurpak',tag:'عند الجوع',it:[{c:'g',x:'Wasa محمّص'},{c:'a',x:'زبدة Lurpak Unsalted أو سمنة بلدية'}]},{em:'🍚',n:'أرز + بطاطس مسلوقة',tag:'الوجبة الرئيسية',it:[{c:'g',x:'أرز أبيض'},{c:'gr',x:'بطاطس مسلوقة بزيت الزيتون'},{c:'b',x:'عصير تفاح طازج مصفى'}]},{em:'🍐',n:'تفاح أو كمثرى مقشّرة',tag:'عند الجوع',it:[{c:'gr',x:'تفاح أو كمثرى مقشّرة'}]}]},kids:{breakfast:{em:'🫘',n:'فول + بيض + خيار + حليب',it:[{c:'gr',x:'فول مدمس + بيضة مسلوقة'},{c:'gr',x:'خيار + طماطم'},{c:'g',x:'خبز بيت'},{c:'b',x:'حليب'}],prep:'',mira:'ميرا: مثالي'},lunch:{em:'🥘',n:'هريسة لحم غنم + خبز بيت',it:[{c:'g',x:'هريسة قمح بلحم غنم'},{c:'g',x:'سمن بلدي فوقها'},{c:'g',x:'خبز بيت'},{c:'gr',x:'سلطة جرجير وخيار'},{c:'b',x:'لبن رايب'}],mira:'ميرا: هريسة بمرق خضار + لبن + جبن'},dinner:{em:'🍛',n:'أرز + باقي الغداء + سلطة',it:[{c:'a',x:'أرز الغداء يُسخَّن مع مرق'},{c:'gr',x:'سلطة خيار وطماطم وجرجير'},{c:'g',x:'خبز بيت'}],mira:'ميرا: أرز + سلطة + جبن'}}}
+];
+
+const SHOP=[
+  {em:'🍞',name:'التوست المقرمش بالردة',prods:[
+    {ic:'🟤',br:'Wasa Crisp Bread — Fibre',gn:'خبز مقرمش بنخالة القمح الكاملة',why:'المكوّن الأساسي في نظام د. ضياء. مكوّن واحد تقريباً: قمح كامل. بدون سكر، بدون خميرة، بدون زيت صناعي.',wh:'Tamimi · Danube · Panda — قسم الخبز أو الأغذية الصحية',nt:'best',nl:'الأفضل'},
+    {ic:'🟫',br:'Ryvita Original Rye Crispbread',gn:'خبز جاودار مقرمش',why:'مصنوع من الجاودار الكامل. نظيف جداً. بديل ممتاز لـ Wasa بنكهة أغنى قليلاً.',wh:'Tamimi · Carrefour · LuLu',nt:'best',nl:'الأنظف'},
+    {ic:'🌾',br:'ريتشبيك الحبوب الكاملة',gn:'توست حبوب كاملة محلي',why:'متوفر في كل السوبرماركت. تحقق: القمح الكامل يجب أن يكون المكوّن الأول في قائمة المكونات.',wh:'كل السوبرماركت',nt:'check',nl:'تحقق من المكونات'},
+  ]},
+  {em:'🧀',name:'الجبن المطبوخ (يسيح في الميكرويف)',prods:[
+    {ic:'🟡',br:'Kiri Cream Cheese Original',gn:'جبن كريمي طبيعي',why:'الأنظف في فئته. مكونات بسيطة: جبن + قشدة + ملح. يسيح بسهولة في الميكرويف 15-20 ثانية تماماً.',wh:'Tamimi · Danube · Panda · Carrefour',nt:'best',nl:'الأنظف'},
+    {ic:'🧡',br:'Puck Cream Cheese Original',gn:'جبن كريمي',why:'متوفر أكثر في السوق السعودي. مقبول من حيث نقاء المكونات. يسيح بشكل مثالي.',wh:'كل السوبرماركت',nt:'clean',nl:'نظيف'},
+    {ic:'🚫',br:'تجنّب: Kraft Singles و Happy Cow مثلثات',gn:'جبن معالج Processed Cheese',why:'يحتوي نشا ذرة + مواد حافظة + إضافات. لا يذوب بشكل طبيعي لأنه ليس جبناً حقيقياً.',wh:'',nt:'avoid',nl:'تجنّب'},
+  ]},
+  {em:'🫒',name:'الدهون المسموحة',prods:[
+    {ic:'💚',br:'California Olive Ranch Extra Virgin',gn:'زيت زيتون بكر ممتاز',why:'زيت زيتون أمريكي معتمد. شفاف ومثبت التحليل. حموضة أقل من 0.5%.',wh:'Tamimi · Danube',nt:'best',nl:'الأفضل'},
+    {ic:'💛',br:'Lurpak Unsalted Butter',gn:'زبدة طبيعية غير مملحة',why:'مكوّن واحد فقط: قشدة. هذا هو المقصود بـ"الزبدة" في نظام د. ضياء. ليس السمن الصناعي أو المارغرين.',wh:'كل السوبرماركت',nt:'clean',nl:'نظيف'},
+    {ic:'🟡',br:'سمن بلدي حيواني 100%',gn:'سمن حيواني طبيعي',why:'ابحث عن "سمن حيواني 100%" على العبوة. السمن البلدي المحلي المصنوع من الحليب كامل الدسم.',wh:'أسواق المنتجات البلدية',nt:'best',nl:'الأفضل'},
+    {ic:'🚫',br:'تجنّب: زيوت الطبخ الصناعية ومارغرين',gn:'كـ زيت عباد الشمس أو زيت الذرة أو Flora',why:'زيوت مهدرجة أو عالية الأوميغا-6. ليست من المسموحات في نظام د. ضياء.',wh:'',nt:'avoid',nl:'تجنّب'},
+  ]},
+  {em:'🥔',name:'البطاطس',prods:[
+    {ic:'🥔',br:'بطاطس طازجة كاملة — أي نوع',gn:'بطاطس طازجة',why:'لا فرق في الماركة. المهم: طازجة كاملة غير مقطعة مسبقاً. تُطهى بزيت الزيتون والملح فقط.',wh:'أي قسم خضار',nt:'clean',nl:'طازجة فقط'},
+    {ic:'🚫',br:'تجنّب: McCain وأي Frozen Fries',gn:'بطاطس مجمدة جاهزة',why:'تحتوي زيوت صناعية مهدرجة وملح زائد وإضافات. ليست ما يقصده نظام د. ضياء.',wh:'',nt:'avoid',nl:'تجنّب'},
+  ]},
+  {em:'🍚',name:'الأرز',prods:[
+    {ic:'🌾',br:'Uncle Ben\'s Basmati Rice',gn:'أرز بسمتي',why:'أرز بسمتي نظيف بدون إضافات. مؤشر جلايسيمي أقل من الأرز الأبيض العادي.',wh:'كل السوبرماركت',nt:'clean',nl:'جيد'},
+    {ic:'🌾',br:'أرز أبيض محلي عادي',gn:'أي ماركة محلية',why:'مقبول تماماً. المهم: يُطهى بزيت الزيتون فقط بدون مرق مصنّع أو بهارات محزومة.',wh:'كل السوبرماركت',nt:'clean',nl:'مقبول'},
+  ]},
+  {em:'🍎',name:'الفواكه المسموحة — مقشّرة دائماً',prods:[
+    {ic:'🍎',br:'تفاح طازج أي صنف',gn:'',why:'مقشّر بالكامل. أي صنف مقبول.',wh:'',nt:'clean',nl:'مقشّر دائماً'},
+    {ic:'🍐',br:'كمثرى طازجة',gn:'',why:'مقشّرة بالكامل.',wh:'',nt:'clean',nl:'مقشّر دائماً'},
+    {ic:'🥭',br:'مانجا طازجة موسمية',gn:'',why:'مقشّرة ومقطعة.',wh:'',nt:'clean',nl:'مقشّر دائماً'},
+    {ic:'🍓',br:'فراولة طازجة',gn:'',why:'مغسولة جيداً. لا تحتاج تقشير.',wh:'',nt:'clean',nl:'مغسولة جيداً'},
+    {ic:'🍊',br:'رمان طازج — عصير مصفى',gn:'',why:'اعصره وصفّيه. البذور الصلبة تُزال.',wh:'',nt:'check',nl:'عصير مصفى فقط'},
+  ]},
+  {em:'👶',name:'خاص بالأطفال — بروتين يومي',prods:[
+    {ic:'🥚',br:'بيض Free Range أو بيض بلدي',gn:'بيض حر التربية',why:'أعلى بروتيناً وأوميغا-3 من البيض المزرعي. ابحث عن "Free Range" على العبوة.',wh:'Tamimi · Danube',nt:'best',nl:'الأفضل للأطفال'},
+    {ic:'🥛',br:'Nada Full Fat أو Saudia Full Fat',gn:'حليب كامل الدسم',why:'الأطفال يحتاجون دهون كاملة لنمو الدماغ. لا حليب قليل الدسم قبل عمر 5 سنوات.',wh:'كل السوبرماركت',nt:'clean',nl:'كامل الدسم فقط'},
+    {ic:'🧀',br:'Puck White Cheese أو Al Marai White Cheese',gn:'جبن أبيض طبيعي',why:'مصدر ممتاز للكالسيوم والبروتين. تحقق: المكوّن الأول يجب أن يكون "حليب" وليس "زيت نباتي".',wh:'كل السوبرماركت',nt:'check',nl:'تحقق من المكونات'},
+  ]},
+  {em:'🌾',name:'بسكويت شوفان للأطفال',prods:[
+    {ic:'🌿',br:'Nairns Oat Biscuits — Original',gn:'بسكويت شوفان طبيعي',why:'الأنظف في فئته. مصنوع من الشوفان الكامل. بدون سكر مصنّع ولا دقيق أبيض.',wh:'Tamimi · Danube · Carrefour',nt:'best',nl:'الأنظف'},
+    {ic:'🥣',br:'Quaker Oats — Old Fashioned',gn:'شوفان ملفوف طبيعي',why:'للفطور المطهو. مكوّن واحد: شوفان. أرخص وأفضل من الشوفان الفوري المعبأ.',wh:'كل السوبرماركت',nt:'best',nl:'الأنظف'},
+  ]},
+];
+
+const FAM=[
+  {id:'saad',n:'سعد',av:'👨',age:40,role:'الأب',sched:'صباحاً: ماء + حبة بركة + عسل فقط · يخرج 7:15 · يرجع 4:15 · ينام ~12 ليلاً',note:'يتبع نظام د. ضياء للكبار. لا توقيت ثابت للأكل — عند الجوع فقط. البروتين الحيواني 3 مرات أسبوعياً: أحد + ثلاثاء + خميس.',cal:2200,pro:70,crb:260,fat:75,pref:['لحم غنم','عصيدة','خبز بيت','عسل+سمن','قرصان','جريش'],avoid:[],al:[['p','نظام د. ضياء: أكل عند الجوع فقط — لا كميات ولا توقيت'],['w','الصوم الصباحي يحرق الدهون الحشوية'],['i','البروتين الحيواني 3 مرات أسبوعياً فقط']]},
+  {id:'wife',n:'أمهم',av:'👩',age:37,role:'الأم',sched:'تسرّح الأطفال 5:45 ص · ترجع للنوم · تصحى 2:00 ظ · قهوة + تمر · تبدأ الطبخ · تسهر حتى 3 فجراً',note:'تتبع نظام د. ضياء. قهوتها بالزعفران الساعة 2:30 ظهر هي فطورها الفعلي.',cal:1800,pro:60,crb:220,fat:65,pref:['قهوة سعودية بالزعفران','تمر'],avoid:[],al:[['p','نظام د. ضياء: أول وجبة بعد القهوة عند الجوع'],['r','الحديد مهم جداً في هذا العمر'],['i','الزعفران اليومي مثبت علمياً لتحسين المزاج']]},
+  {id:'mira',n:'ميرا',av:'👧',age:12,role:'البنت',sched:'مدرسة 6:30 ص · رجوع 12:30 ظ',note:'لا تأكل اللحم في البيت. تحتاج يومياً: بيضتان + جبن + بقول = يعوض اللحم بالكامل.',cal:1800,pro:62,crb:220,fat:55,pref:['بيض','جبن','عدس','فول','مكرونة'],avoid:['لحم في البيت'],al:[['r','⚠️ خطر نقص الحديد — مراقبة دورية'],['r','فيتامين B12 في الحيوانية فقط — انتبهي'],['i','بيضتان يومياً = 12غ بروتين + حديد + B12']]},
+  {id:'amir',n:'أمير',av:'👦',age:7,role:'الولد',sched:'مدرسة 6:30 ص · يأكل في المدرسة · رجوع 12:30 ظ',note:'يأكل في المدرسة. عند الرجوع: وجبة خفيفة جاهزة (تمر + فاكهة). لا يجلس أكثر من 5 دقائق.',cal:1600,pro:55,crb:210,fat:50,pref:['مكرونة','أرز','حليب','خيار','تفاح','موز'],avoid:['حلويات مصنعة','مشروبات ملونة'],al:[['i','يأكل في المدرسة — وجبة خفيفة عند الرجوع فقط'],['i','الكالسيوم + D ضروريان لنمو العظام'],['w','لا إجبار — وجبات صغيرة متكررة أفضل']]},
+  {id:'jamal',n:'جمال',av:'🧒',age:4,role:'الولد',sched:'يصحى الظهر — وجبة خفيفة فور صحيانه ثم يأكل مع الجميع',note:'4 سنوات — مرحلة الانتقائية الطبيعية. لسان العصفور مفضل. وجبات صغيرة متكررة أفضل.',cal:1300,pro:45,crb:170,fat:42,pref:['لسان العصفور','أرز','حليب','موز','تمر'],avoid:['حلويات','شبسات','عصير ملون'],al:[['i','يصحى الظهر — تمر + حليب فور الصحيان'],['i','الدهون الصحية مهمة لنمو دماغه الآن'],['w','لا إجبار — 4-6 وجبات صغيرة أفضل من 3 كبيرة']]},
+];
+
+let dOff=0,aud='adult',openM={};
+
+window.onload=()=>{
+  setTimeout(()=>{const sp=document.getElementById('splash');sp.style.transition='opacity .5s';sp.style.opacity='0';setTimeout(()=>sp.style.display='none',500)},1500);
+  const n=new Date();
+  const el=document.getElementById('hdate');
+  if(el) el.innerHTML=DAYS[n.getDay()]+'<br><small style="color:var(--t3)">'+n.getDate()+' '+MONTHS[n.getMonth()]+'</small>';
+  renderDay();renderWeek();renderFam();renderShop();reveal();
+};
+
+function gp(id){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.bnav-b').forEach(b=>b.classList.remove('on'));
+  document.getElementById('pg-'+id).classList.add('on');
+  const pages=['today','week','family','shop','supps','tips'];
+  const i=pages.indexOf(id);
+  if(i>=0){document.querySelectorAll('.tab')[i].classList.add('on');document.querySelectorAll('.bnav-b')[i].classList.add('on');}
+  window.scrollTo(0,0);setTimeout(reveal,60);
+}
+
+function chd(d){dOff+=d;renderDay();}
+
+function setAud(a){
+  aud=a;
+  document.getElementById('btn-adult').className='aud-btn'+(a==='adult'?' on-adult':'');
+  document.getElementById('btn-kids').className='aud-btn'+(a==='kids'?' on-kids':'');
+  openM={};renderDay();
+}
+
+function renderDay(){
+  const now=new Date();
+  const di=(now.getDay()+dOff+700)%7;
+  const plan=W[di];
+  const relM={'-1':'أمس','0':'اليوم','1':'غداً'};
+  const rel=relM[String(dOff)]||(dOff>0?'بعد '+dOff+' أيام':'قبل '+Math.abs(dOff)+' أيام');
+  document.getElementById('dname').textContent=DAYS[di];
+  document.getElementById('drel').textContent=rel;
+  let h='';
+  if(aud==='adult'){
+    const ap=plan.adult;
+    h+='<div class="al pur rv"><div class="al-ic">🩺</div><div><strong>نظام د. ضياء — '+DAYS[di]+':</strong> '+ap.note+'</div></div>';
+    h+=ap.protein
+      ?'<div class="al g rv"><div class="al-ic">🥩</div><div>يوم بروتين ✓ — يُسمح بحصة واحدة من اللحم أو السمك اليوم</div></div>'
+      :'<div class="al w rv"><div class="al-ic">🌿</div><div>يوم بدون بروتين حيواني — توست + أرز + بطاطس + فواكه فقط</div></div>';
+    h+='<div class="ps-label rv"><span>الخيارات المتاحة اليوم</span><span class="badge badge-adult">الكبار — عند الجوع فقط</span></div>';
+    ap.options.forEach((opt,i)=>{
+      const id='ad_'+di+'_'+i,op=openM[id]||false;
+      h+='<div class="mc'+(op?' op':'')+'" id="mc_'+id+'" onclick="tog(\''+id+'\')">';
+      h+='<div class="mc-top"><div class="mc-left"><div class="mc-em">'+opt.em+'</div><div><div class="mc-time">'+opt.tag+'</div><div class="mc-name">'+opt.n+'</div></div></div>';
+      h+='<span class="mc-tag">خيار '+(i+1)+'</span></div>';
+      h+='<div class="mc-body"><div class="sec-t">المكونات</div>';
+      opt.it.forEach(it=>h+='<div class="fl"><div class="fd '+it.c+'"></div><div>'+it.x+'</div></div>');
+      h+='</div></div>';
+    });
+    h+='<div class="why rv">☕ <strong>القهوة السعودية:</strong> الزعفران والهيل والتمر مسموحان بالكامل. قهوة الزعفران تُحسب وجبة خفيفة مقبولة في النظام.</div>';
+  } else {
+    const kp=plan.kids;
+    h+='<div class="al i rv"><div class="al-ic">👶</div><div>الأطفال يحتاجون بروتيناً حيوانياً يومياً للنمو — بيض أو دجاج أو لحم أو سمك أو جبن + بقول</div></div>';
+    h+='<div class="ps-label rv"><span>🌅 الفطور — 6:00 صباحاً</span><span class="badge badge-kids">ميرا + أمير ← مدرسة 6:30</span></div>';
+    h+=mkKCard('k_'+di+'_b',kp.breakfast);
+    h+='<div class="ps-label rv"><span>🍽️ الغداء — ~3:00 عصراً</span><span class="badge badge-all">الجميع — جمال عند صحيانه + مع الجميع</span></div>';
+    h+=mkKCard('k_'+di+'_l',kp.lunch);
+    h+='<div class="ps-label rv"><span>🌙 العشاء — 9:00 مساءً</span><span class="badge badge-kids">الأطفال</span></div>';
+    h+=mkKCard('k_'+di+'_d',kp.dinner);
+    h+='<div class="why rv">🧒 <strong>جمال (4 سنوات):</strong> فور صحيانه الظهر → تمر + موز + حليب فوراً. ثم يأكل مع الجميع الغداء الساعة 3.</div>';
+  }
+  document.getElementById('planOut').innerHTML=h;
+  setTimeout(reveal,50);
+}
+
+function mkKCard(id,meal){
+  const op=openM[id]||false;
+  let h='<div class="mc'+(op?' op':'')+'" id="mc_'+id+'" onclick="tog(\''+id+'\')">';
+  h+='<div class="mc-top"><div class="mc-left"><div class="mc-em">'+meal.em+'</div><div><div class="mc-name">'+meal.n+'</div></div></div></div>';
+  h+='<div class="mc-body"><div class="sec-t">المكونات</div>';
+  meal.it.forEach(it=>h+='<div class="fl"><div class="fd '+it.c+'"></div><div>'+it.x+'</div></div>');
+  if(meal.mira) h+='<div class="al i" style="margin-top:8px;font-size:11px"><div class="al-ic">👧</div><div>'+meal.mira+'</div></div>';
+  if(meal.prep) h+='<div class="why" style="margin-top:7px">⏱️ <strong>التحضير:</strong> '+meal.prep+'</div>';
+  h+='</div></div>';
+  return h;
+}
+
+function tog(id){
+  openM[id]=!openM[id];
+  const el=document.getElementById('mc_'+id);
+  if(el) el.classList.toggle('op',openM[id]);
+}
+
+function renderWeek(){
+  const now=new Date();let h='';
+  for(let i=0;i<7;i++){
+    const di=(now.getDay()+i)%7,plan=W[di],d=new Date(now);d.setDate(d.getDate()+i);
+    h+='<div class="wd'+(i===0?' today':'')+'" onclick="dOff='+i+';renderDay();gp(\'today\')">';
+    h+='<div class="wd-name">'+DAYS[di]+'</div><div class="wd-date">'+d.getDate()+' '+MONTHS[d.getMonth()]+'</div>';
+    h+=plan.adult.protein?'<div class="wd-m" style="color:#c090f0">🥩 بروتين</div>':'<div class="wd-m" style="color:var(--green2)">🌿 توست+أرز</div>';
+    h+='<div class="wd-m">'+plan.kids.breakfast.em+' '+plan.kids.breakfast.n.substring(0,11)+'..</div>';
+    h+='<div class="wd-m">'+plan.kids.lunch.em+' '+plan.kids.lunch.n.substring(0,11)+'..</div>';
+    h+='</div>';
+  }
+  document.getElementById('wstrip').innerHTML=h;
+}
+
+function renderFam(){
+  let h='';
+  FAM.forEach(p=>{
+    h+='<div class="card rv"><div class="prof-top"><div class="prof-av">'+p.av+'</div><div><div class="prof-name">'+p.n+'</div><div class="prof-role">'+p.role+' · '+p.age+' سنة</div></div></div>';
+    h+='<div style="font-size:11px;color:var(--t2);line-height:1.7;margin-bottom:9px;background:var(--s2);border-radius:var(--rsm);padding:8px 11px;border:1px solid var(--border)">📅 '+p.sched+'</div>';
+    h+='<div style="font-size:11px;color:var(--t2);line-height:1.65;margin-bottom:9px">'+p.note+'</div>';
+    h+='<div class="needs-g"><div class="ni"><div class="ni-l">السعرات</div><div class="ni-v">'+p.cal+'<span class="ni-u"> سعرة</span></div></div><div class="ni"><div class="ni-l">البروتين</div><div class="ni-v">'+p.pro+'<span class="ni-u">غ</span></div></div><div class="ni"><div class="ni-l">الكربوهيدرات</div><div class="ni-v">'+p.crb+'<span class="ni-u">غ</span></div></div><div class="ni"><div class="ni-l">الدهون</div><div class="ni-v">'+p.fat+'<span class="ni-u">غ</span></div></div></div>';
+    p.al.forEach(a=>h+='<div class="al '+a[0]+'" style="padding:7px 10px;margin-bottom:5px"><div class="al-ic" style="font-size:12px">'+(a[0]==='r'?'⚠️':a[0]==='p'?'🩺':a[0]==='w'?'💡':'ℹ️')+'</div><div style="font-size:11px">'+a[1]+'</div></div>');
+    if(p.pref.length){h+='<div style="font-size:10px;color:var(--t3);margin:7px 0 4px">يفضل:</div><div class="chips">';p.pref.forEach(f=>h+='<span class="chip ok">'+f+'</span>');h+='</div>';}
+    if(p.avoid.length){h+='<div style="font-size:10px;color:var(--t3);margin:7px 0 4px">يتجنب:</div><div class="chips">';p.avoid.forEach(f=>h+='<span class="chip no">'+f+'</span>');h+='</div>';}
+    h+='</div>';
+  });
+  document.getElementById('famProf').innerHTML=h;
+}
+
+function renderShop(){
+  let h='';
+  SHOP.forEach((cat,ci)=>{
+    h+='<div class="shop-cat rv"><div class="shop-cat-hd" id="shd_'+ci+'" onclick="togS('+ci+')"><div class="scat-left"><div class="scat-em">'+cat.em+'</div><div><div class="scat-name">'+cat.name+'</div><div class="scat-count">'+cat.prods.length+' منتج</div></div></div><span class="scat-arr">▼</span></div>';
+    h+='<div class="shop-body" id="sbody_'+ci+'">';
+    cat.prods.forEach(p=>{
+      const nc={best:'pn-best',clean:'pn-clean',check:'pn-check',avoid:'pn-avoid'}[p.nt]||'pn-clean';
+      h+='<div class="prod"><div class="prod-icon">'+p.ic+'</div><div class="prod-info"><div class="prod-brand">'+p.br+'</div>';
+      if(p.gn) h+='<div class="prod-generic">'+p.gn+'</div>';
+      if(p.why) h+='<div class="prod-why">'+p.why+'</div>';
+      if(p.wh) h+='<div class="prod-why" style="color:var(--teal)">📍 '+p.wh+'</div>';
+      h+='<span class="prod-note '+nc+'">'+p.nl+'</span></div></div>';
+    });
+    h+='</div></div>';
+  });
+  document.getElementById('shopList').innerHTML=h;
+  togS(0);
+}
+
+function togS(i){
+  const hd=document.getElementById('shd_'+i),bd=document.getElementById('sbody_'+i);
+  if(!hd||!bd)return;
+  const op=bd.classList.contains('op');
+  bd.classList.toggle('op',!op);hd.classList.toggle('op',!op);
+}
+
+function reveal(){
+  const els=document.querySelectorAll('.rv:not(.sh)');if(!els.length)return;
+  const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('sh'),i*60);obs.unobserve(e.target);}});},{threshold:.06});
+  els.forEach(el=>obs.observe(el));
+}
+</script>
+</body>
+</html>
